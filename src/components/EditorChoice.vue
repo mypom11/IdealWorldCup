@@ -1,35 +1,71 @@
 <template>
   <section>
-    <div class="slide-component"></div>
-    <div class="background"></div>
-    <div class="text-container">
-      <h3>Editor's Choice</h3>
-      <h2>마블 히어로 월드컵</h2>
-      <p>마블 영화(MCU) 중 가장 좋아하는 캐릭터는?</p>
+    <div class="slide-component">
+      <agile
+        class="main-slide"
+        :dots="true"
+        :infinite="true"
+        :autoplay="false"
+        :pauseOnHover="true"
+      >
+        <div
+          class="slide"
+          v-for="(game, i) in $store.state.editorList"
+          :key="i"
+        >
+          <div
+            class="background"
+            :style="{
+              'background-image': `url(http://localhost:3000/${game.bg})`,
+            }"
+          ></div>
+          <div class="text-container">
+            <h3>Editor's Choice</h3>
+            <h2>{{ game.title }}</h2>
+            <p>{{ game.desc }}</p>
 
-      <div class="button-container">
-        <button class="custom">
-          <font-awesome-icon :icon="['fas', 'play']" class="mr-10" />플레이
-        </button>
-        <button class="custom">
-          <font-awesome-icon
-            :icon="['fas', 'ranking-star']"
-            class="mr-10"
-          />랭킹
-        </button>
-        <button class="custom">
-          <font-awesome-icon
-            :icon="['fas', 'share-from-square']"
-            class="mr-10"
-          />공유
-        </button>
-      </div>
+            <div class="button-container">
+              <button
+                class="custom"
+                @click="
+                  $router.push({ name: 'Game', query: { id: `${game._id}` } })
+                "
+              >
+                <font-awesome-icon
+                  :icon="['fas', 'play']"
+                  class="mr-10"
+                />플레이
+              </button>
+              <button class="custom">
+                <font-awesome-icon
+                  :icon="['fas', 'ranking-star']"
+                  class="mr-10"
+                />랭킹
+              </button>
+              <button class="custom">
+                <font-awesome-icon
+                  :icon="['fas', 'share-from-square']"
+                  class="mr-10"
+                />공유
+              </button>
+            </div>
+          </div>
+        </div>
+      </agile>
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+import { VueAgile } from "vue-agile";
+export default {
+  components: {
+    agile: VueAgile,
+  },
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -39,13 +75,31 @@ section {
   width: 100vw;
   height: 100vh;
 }
+.slide-component {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  > ul {
+    position: relative;
+    transition: 0.2s;
+    left: -100vw;
+    width: fit-content;
+    display: flex;
+    height: 100%;
+    flex-wrap: nowrap;
+    > li {
+      position: relative;
+      width: 100vw;
+    }
+  }
+}
 .background {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-image: url("~@/assets/images/sample/bg.png");
+
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -104,6 +158,54 @@ section {
       cursor: pointer;
       &:hover {
         opacity: 1;
+      }
+    }
+  }
+}
+
+::v-deep {
+  .main-slide {
+    &.agile {
+      height: 100vh;
+      .slide {
+        position: relative;
+        height: 100vh;
+      }
+      .agile__dots {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        .agile__dot {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: rgba($color: $white, $alpha: 0.4);
+          &.agile__dot--current {
+            background: rgba($color: $white, $alpha: 0.8);
+          }
+        }
+      }
+      .agile__nav-button {
+        all: unset;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: rem(40);
+        color: rgba($color: $white, $alpha: 0.4);
+        cursor: pointer;
+        &:hover {
+          color: $white;
+        }
+
+        &.agile__nav-button--prev {
+          left: 5%;
+        }
+        &.agile__nav-button--next {
+          right: 5%;
+        }
       }
     }
   }

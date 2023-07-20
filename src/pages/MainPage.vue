@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main v-if="loading">
     <EditorChoice />
     <GameList />
   </main>
@@ -10,28 +10,23 @@ import EditorChoice from "@/components/EditorChoice.vue";
 import GameList from "@/components/GameList.vue";
 export default {
   components: { EditorChoice, GameList },
-  contents: [
-    {
-      id: "1",
-      title: "~~이상형 월드컵",
-      desc: "......",
-      bg: ".",
-      eidtor: false,
-      public: true,
-      pw: "",
-      maker_id: "",
-      item_count: 1,
-      popular_count: 2,
-      video: false,
-      items: [
-        {
-          name: "",
-          url: "",
-          selected: 0,
-        },
-      ],
+  mounted() {
+    this.getContents();
+  },
+  data() {
+    return {
+      loading: false,
+    };
+  },
+  methods: {
+    getContents() {
+      this.$axios.get("http://localhost:3000/api/content").then((res) => {
+        this.$store.commit("getContents", [...res.data.list]);
+        console.log(res);
+        this.loading = true;
+      });
     },
-  ],
+  },
 };
 </script>
 

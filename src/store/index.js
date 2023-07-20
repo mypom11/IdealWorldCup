@@ -1,9 +1,17 @@
 import { createStore } from "vuex";
 
 export default createStore({
-  state: {},
+  state: {
+    contents: [],
+    editorList: [],
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    getContents(state, payload) {
+      state.contents = payload;
+      state.editorList = payload.filter((item) => item.editor);
+    },
+  },
   actions: {},
   modules: {},
 });

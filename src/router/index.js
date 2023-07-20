@@ -11,6 +11,11 @@ const routes = [
     name: "Making",
     component: () => import("@/pages/MakingPage.vue"),
   },
+  {
+    path: "/game",
+    name: "Game",
+    component: () => import("@/pages/GamePage.vue"),
+  },
 ];
 
 const router = createRouter({

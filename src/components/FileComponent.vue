@@ -1,14 +1,14 @@
 <template>
   <div class="input-file">
-    <label for="ex_filename" :class="{ on: read || preview }">
+    <label :for="id" :class="{ on: read || preview }">
       <img :src="modelValue" alt="" v-if="modelValue != null && read" />
       <img :src="preview" alt="" v-if="preview && !read" />
     </label>
     <input
       type="file"
-      id="ex_filename"
+      :id="id"
       class="upload-hidden"
-      @change="handleChange"
+      @change="handleChange($event)"
       v-if="!read"
     />
   </div>
@@ -16,22 +16,21 @@
 
 <script>
 export default {
-  name: "InputFile",
   data() {
     return {
       preview: "",
     };
   },
   props: {
-    picture: String,
+    id: String,
     read: Boolean,
     modelValue: null,
   },
   methods: {
-    handleChange: function (event) {
-      var file = event.target.files[0];
+    handleChange: function ($event) {
+      var file = $event.target.files[0];
       if (file && file.type.match(/^image\/(png|jpeg|jpg)$/)) {
-        this.preview = window.URL.createObjectURL(file);
+        this.preview = URL.createObjectURL(file);
         this.$emit("update:modelValue", file);
       } else {
         alert("지원하지 않는 형식의 파일입니다.");

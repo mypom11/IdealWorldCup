@@ -112,3 +112,91 @@ hr{
     margin: 20px 0;
     background: rgba($color: #000000, $alpha: .4);
 }
+
+.game-items {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    > li {
+      position: relative;
+      width: 50%;
+      @include flex(center, center);
+      .img-wrap {
+        cursor: pointer;
+        position: relative;
+        height: 65vh;
+        width: 25vw;
+        text-align: center;
+        margin-bottom: 50px;
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          width: 90%;
+          height: 90%;
+          top: 50%;
+          left: 50%;
+          background: $white;
+          transform-origin: center center;
+          border: 20px solid $black;
+          transform: translate(-50%, -50%) rotateZ(20deg);
+        }
+        &:before {
+          content: "";
+          z-index: 2;
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 50%;
+          left: 50%;
+          background: #ff222d;
+          border: 20px solid $black;
+          transform-origin: center center;
+          transform: translate(-50%, -50%) rotateZ(-20deg);
+        }
+        .img {
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+          box-sizing: content-box;
+          z-index: 3;
+          width: 100%;
+          height: 100%;
+          border: 20px solid $white;
+          background-color:$black;
+          background-position: center;
+          background-size: contain;
+          background-repeat: no-repeat;
+          box-shadow: 6px 6px 6px rgba($color: #000000, $alpha: 0.5);
+        }
+      }
+      h2 {
+        font-family: "comic";
+        font-size: rem(36);
+        position: absolute;
+        bottom: -20%;
+        left: 50%;
+        text-align: center;
+        background: $white;
+        padding: 20px 0;
+        z-index: 10;
+        border: 10px solid $black;
+        width: 100%;
+        transform: translate(-50%) skewX(-20deg);
+      }
+      &:nth-child(2n) {
+        .img-wrap {
+          &:after {
+            transform: translate(-50%, -50%) rotateZ(-20deg);
+          }
+          &:before {
+            transform: translate(-50%, -50%) rotateZ(20deg);
+            background: #022f8f;
+          }
+        }
+      }
+    }
+  }

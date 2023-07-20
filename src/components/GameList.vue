@@ -2,28 +2,33 @@
   <section>
     <div class="search-container">
       <ul class="tab">
-        <li>인기순</li>
-        <li>최신순</li>
+        <li :class="{ on: tab === 0 }" @click="tab = 0">인기순</li>
+        <li :class="{ on: tab === 1 }" @click="tab = 1">최신순</li>
       </ul>
       <div>
-        <input type="text" placeholder="검색어를 입력하세요" />
+        <input type="text" placeholder="검색어를 입력하세요" v-model="query" />
         <button>검색</button>
       </div>
     </div>
 
     <ul class="game-list">
-      <li>
-        <img src="" alt="" />
+      <li v-for="(game, i) in resultList" :key="i">
+        <div class="img-wrap">
+          <img :src="`http://localhost:3000/${game.bg}`" alt="" />
+        </div>
         <h4>
-          dasdfasdf이상형월드컵aaaaaaaaaaaaaaasdasadfsadfsadfsadfsadasfdsdf
+          {{ game.title }}
         </h4>
         <p>
-          ㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴ
-          ㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴ
-          ㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴㅇㅁㄴㄹㅁㄴㅇㄹㅁㄴ
+          {{ game.desc }}
         </p>
         <div class="button-container">
-          <button class="custom">
+          <button
+            class="custom"
+            @click="
+              $router.push({ name: 'Game', query: { id: `${game._id}` } })
+            "
+          >
             <font-awesome-icon :icon="['fas', 'play']" class="mr-10" />플레이
           </button>
           <button class="custom">
@@ -40,52 +45,41 @@
           </button>
         </div>
       </li>
-      <li>
-        <img src="" alt="" />
-        <h4></h4>
-        <p></p>
-        <div class="button-container">
-          <button></button>
-        </div>
-      </li>
-      <li>
-        <img src="" alt="" />
-        <h4></h4>
-        <p></p>
-        <div class="button-container">
-          <button></button>
-        </div>
-      </li>
-      <li>
-        <img src="" alt="" />
-        <h4></h4>
-        <p></p>
-        <div class="button-container">
-          <button></button>
-        </div>
-      </li>
-      <li>
-        <img src="" alt="" />
-        <h4></h4>
-        <p></p>
-        <div class="button-container">
-          <button></button>
-        </div>
-      </li>
-      <li>
-        <img src="" alt="" />
-        <h4></h4>
-        <p></p>
-        <div class="button-container">
-          <button></button>
-        </div>
-      </li>
     </ul>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      searchList: "",
+      tab: 0,
+      query: "",
+    };
+  },
+  computed: {
+    resultList() {
+      let arr = this.$store.state.contents;
+      if (this.tab === 0) {
+        arr.sort((a, b) => {
+          return b.popular_count - a.popular_count - b.popular_count;
+        });
+      } else if (this.tab === 1) {
+        arr.sort((a, b) => {
+          return new Date(b.upload_date) - new Date(a.upload_date);
+        });
+      }
+      if (this.query.trim() !== "") {
+        arr = arr.filter((item) => {
+          return item.title.toLowerCase().includes(this.query.toLowerCase());
+        });
+      }
+
+      return arr;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -116,6 +110,11 @@ section {
     border-radius: 20px;
     padding: 10px 20px;
     border: 1px solid $black;
+    cursor: pointer;
+    &:hover {
+      background: $black;
+      color: $white;
+    }
   }
   .tab {
     display: flex;
@@ -128,7 +127,8 @@ section {
 
       padding: 0 10px;
       cursor: pointer;
-      &:hover {
+      &:hover,
+      &.on {
         color: $black;
         &:after {
           width: 100%;
@@ -166,22 +166,39 @@ section {
         display: flex;
       }
     }
+    .img-wrap {
+      position: relative;
+      display: block;
+      margin-bottom: 20px;
+      width: 100%;
+      height: 20vh;
+      @include flex(center, center);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 10px solid $black;
+      box-shadow: 3px 3px 6px rgba($color: #000000, $alpha: 0.6);
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
     img {
       width: 100%;
       height: 20vh;
-      margin-bottom: 20px;
     }
     h4 {
       font-family: "nexon";
       font-size: rem(20);
-      height: 42px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       overflow: hidden;
       word-break: break-word;
       text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+      white-space: nowrap;
     }
     p {
       font-size: rem(18);
@@ -209,7 +226,13 @@ section {
     align-items: center;
     gap: 10px;
     .custom {
+      color: $white;
       margin-right: 0;
+      background: rgba($color: #000000, $alpha: 0.4);
+      &:hover {
+        color: $black;
+        background: $white;
+      }
     }
   }
 }

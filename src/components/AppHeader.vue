@@ -20,7 +20,7 @@ export default {};
 
 header {
   position: fixed;
-  z-index: 500;
+  z-index: 100;
   width: calc(100vw - 20%);
   margin: rem(20) auto;
   left: 50%;
