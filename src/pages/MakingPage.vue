@@ -43,6 +43,7 @@
             name="type"
             v-model="content.video"
             :value="true"
+            disabled
           /><label for="select2">영상</label>
         </div>
         <ul class="item-list">
@@ -138,7 +139,7 @@ export default {
       }
 
       this.$axios
-        .post("http://localhost:3000/api/content/upload", formData)
+        .post(`${this.$store.state.host}/api/content/upload`, formData)
         .then((res) => {
           if (res.data.result) {
             this.$toast.info("게임이 업로드 되었습니다.");
@@ -199,13 +200,16 @@ h5 {
       border: 1px solid $black;
       text-align: center;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 14px;
       background-color: #fff;
       color: $black;
     }
     &:checked + label {
       background-color: $black;
       color: $white;
+    }
+    &:disabled + label {
+      background: #ccc;
     }
   }
 }

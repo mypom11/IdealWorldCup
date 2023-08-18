@@ -11,10 +11,21 @@ const routes = [
     name: "Making",
     component: () => import("@/pages/MakingPage.vue"),
   },
+
   {
     path: "/game",
     name: "Game",
     component: () => import("@/pages/GamePage.vue"),
+  },
+  {
+    path: "/finish",
+    name: "GameFinish",
+    component: () => import("@/pages/GameFinish.vue"),
+  },
+  {
+    path: "/ranking",
+    name: "GameRanking",
+    component: () => import("@/pages/GameRanking.vue"),
   },
 ];
 

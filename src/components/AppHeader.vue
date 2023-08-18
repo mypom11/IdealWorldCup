@@ -4,10 +4,10 @@
     <ul class="nav">
       <li @click="$router.push({ name: 'Main' })">게임 목록</li>
       <li @click="$router.push({ name: 'Making' })">게임 만들기</li>
-      <li>나의 게임</li>
+      <!-- <li>나의 게임</li> -->
     </ul>
     <div class="user-menu">
-      <span>로그인</span>
+      <!-- <span>로그인</span> -->
     </div>
   </header>
 </template>

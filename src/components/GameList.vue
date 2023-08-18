@@ -14,7 +14,7 @@
     <ul class="game-list">
       <li v-for="(game, i) in resultList" :key="i">
         <div class="img-wrap">
-          <img :src="`http://localhost:3000/${game.bg}`" alt="" />
+          <img :src="`${$store.state.host}/${game.bg}`" alt="" />
         </div>
         <h4>
           {{ game.title }}
@@ -31,13 +31,21 @@
           >
             <font-awesome-icon :icon="['fas', 'play']" class="mr-10" />플레이
           </button>
-          <button class="custom">
+          <button
+            class="custom"
+            @click="
+              $router.push({
+                name: 'GameRanking',
+                query: { id: `${game._id}` },
+              })
+            "
+          >
             <font-awesome-icon
               :icon="['fas', 'ranking-star']"
               class="mr-10"
             />랭킹
           </button>
-          <button class="custom">
+          <button class="custom" @click="this.$emit('share', game._id)">
             <font-awesome-icon
               :icon="['fas', 'share-from-square']"
               class="mr-10"
@@ -228,7 +236,7 @@ section {
     .custom {
       color: $white;
       margin-right: 0;
-      background: rgba($color: #000000, $alpha: 0.4);
+      background: rgba($color: #000000, $alpha: 0.5);
       &:hover {
         color: $black;
         background: $white;

@@ -16,7 +16,7 @@
           <div
             class="background"
             :style="{
-              'background-image': `url(http://localhost:3000/${game.bg})`,
+              'background-image': `url(${$store.state.host}/${game.bg})`,
             }"
           ></div>
           <div class="text-container">
@@ -36,13 +36,21 @@
                   class="mr-10"
                 />플레이
               </button>
-              <button class="custom">
+              <button
+                class="custom"
+                @click="
+                  $router.push({
+                    name: 'GameRanking',
+                    query: { id: `${game._id}` },
+                  })
+                "
+              >
                 <font-awesome-icon
                   :icon="['fas', 'ranking-star']"
                   class="mr-10"
                 />랭킹
               </button>
-              <button class="custom">
+              <button class="custom" @click="this.$emit('share', game._id)">
                 <font-awesome-icon
                   :icon="['fas', 'share-from-square']"
                   class="mr-10"

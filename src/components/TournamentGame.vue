@@ -7,7 +7,7 @@
           <div
             class="img"
             :style="{
-              'background-image': `url(http://localhost:3000/${
+              'background-image': `url(${$store.state.host}/${
                 gameArr[2 * currentRound].url
               })`,
             }"
@@ -23,7 +23,7 @@
           <div
             class="img"
             :style="{
-              'background-image': `url(http://localhost:3000/${
+              'background-image': `url(${$store.state.host}/${
                 gameArr[2 * currentRound + 1].url
               })`,
             }"
@@ -51,6 +51,7 @@ export default {
     winnerSelect(item) {
       this.winnerArr.push(item);
       if (this.gameArr.length === 2) {
+        this.updateContent(item);
         return;
       }
       if (this.winnerArr.length === this.gameArr.length / 2) {
@@ -60,6 +61,21 @@ export default {
       } else {
         this.currentRound++;
       }
+    },
+    updateContent(selected) {
+      const itemId = this.$route.query.id;
+      this.$axios
+        .post(`${this.$store.state.host}/api/content/selected`, {
+          itemId,
+          selectedId: selected._id,
+        })
+        .then(() => {
+          this.$store.commit("setItem", selected);
+          this.$router.push({
+            name: "GameFinish",
+            query: { id: itemId },
+          });
+        });
     },
   },
 

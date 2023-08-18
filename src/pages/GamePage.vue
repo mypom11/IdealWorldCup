@@ -6,26 +6,26 @@
     <div v-if="loading">
       <h2>{{ content.title }}</h2>
       <section>
-        <div class="type-choice" v-if="section === 0">
+        <!-- <div class="type-choice" v-if="section === 0">
           <h3>게임 방식 선택</h3>
           <button @click="typeSelct(0)">토너먼트</button>
           <button @click="typeSelct(1)">조별리그</button>
-        </div>
-        <div class="type-choice" v-if="section === 1">
+        </div> -->
+        <div class="type-choice" v-if="section === 0">
           <h3>게임 라운드 선택</h3>
-          <button @click="numSelect(8)" v-if="content.items.length >= 8">
+          <button @click="numSelect(7)" v-if="content.items.length >= 8">
             8강
           </button>
-          <button @click="numSelect(16)" v-if="content.items.length >= 16">
+          <button @click="numSelect(15)" v-if="content.items.length >= 16">
             16강
           </button>
-          <button @click="numSelect(32)" v-if="content.items.length >= 32">
+          <button @click="numSelect(31)" v-if="content.items.length >= 32">
             32강
           </button>
-          <button @click="numSelect(64)" v-if="content.items.length >= 64">
+          <button @click="numSelect(63)" v-if="content.items.length >= 64">
             64강
           </button>
-          <button @click="numSelect(128)" v-if="content.items.length >= 128">
+          <button @click="numSelect(127)" v-if="content.items.length >= 128">
             128강
           </button>
         </div>
@@ -58,14 +58,14 @@ export default {
       this.select.type = num;
       this.section = 2;
       const arr = this.shuffleArray(this.content.items);
-      this.selectContent = arr.slice(1, num + 1);
+      this.selectContent = arr.slice(0, num + 1);
       console.log(this.selectContent);
     },
 
     getDetail() {
       console.log(this.$route.query.id);
       this.$axios
-        .get("http://localhost:3000/api/content/detail", {
+        .get(`${this.$store.state.host}/api/content/detail`, {
           params: {
             id: this.$route.query.id,
           },

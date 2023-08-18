@@ -1,7 +1,7 @@
 <template>
   <main v-if="loading">
-    <EditorChoice />
-    <GameList />
+    <EditorChoice @share="getShare" />
+    <GameList @share="getShare" />
   </main>
 </template>
 
@@ -20,10 +20,27 @@ export default {
   },
   methods: {
     getContents() {
-      this.$axios.get("http://localhost:3000/api/content").then((res) => {
+      this.$axios.get(`${this.$store.state.host}/api/content`).then((res) => {
         this.$store.commit("getContents", [...res.data.list]);
         console.log(res);
         this.loading = true;
+      });
+    },
+
+    getShare(id) {
+      let textArea = document.createElement("textarea");
+      textArea.value = `${this.$store.state.host}/game?id=${id}`;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise((res, rej) => {
+        document.execCommand("copy")
+          ? res(this.$toast.info("게임 주소가 복사되었습니다."))
+          : rej();
+        textArea.remove();
       });
     },
   },
