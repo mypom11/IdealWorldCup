@@ -139,7 +139,7 @@ export default {
       }
 
       this.$axios
-        .post(`${this.$store.state.host}/api/content/upload`, formData)
+        .post(`${this.$store.state.host}/content/upload`, formData)
         .then((res) => {
           if (res.data.result) {
             this.$toast.info("게임이 업로드 되었습니다.");

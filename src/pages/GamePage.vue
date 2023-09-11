@@ -65,7 +65,7 @@ export default {
     getDetail() {
       console.log(this.$route.query.id);
       this.$axios
-        .get(`${this.$store.state.host}/api/content/detail`, {
+        .get(`${this.$store.state.host}/content/detail`, {
           params: {
             id: this.$route.query.id,
           },

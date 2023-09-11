@@ -27,9 +27,9 @@ header {
   transform: translateX(-50%);
   background: $black;
   color: $white;
-  padding: 0 rem(80);
+  padding: 0 rem(60);
   border-radius: 20px;
-  height: 60px;
+  height: 50px;
   opacity: 0.8;
   box-shadow: 3px 3px 6px rgba($color: $black, $alpha: 0.8);
   @include flex;

@@ -6,6 +6,7 @@ export default createStore({
     editorList: [],
     item: {},
     host: process.env.VUE_APP_HOST,
+    imgHost: process.env.VUE_APP_HOST_IMAGE,
   },
   getters: {},
   mutations: {

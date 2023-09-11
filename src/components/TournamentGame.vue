@@ -7,7 +7,7 @@
           <div
             class="img"
             :style="{
-              'background-image': `url(${$store.state.host}/${
+              'background-image': `url(${$store.state.imgHost}/${
                 gameArr[2 * currentRound].url
               })`,
             }"
@@ -23,7 +23,7 @@
           <div
             class="img"
             :style="{
-              'background-image': `url(${$store.state.host}/${
+              'background-image': `url(${$store.state.imgHost}/${
                 gameArr[2 * currentRound + 1].url
               })`,
             }"
@@ -65,7 +65,7 @@ export default {
     updateContent(selected) {
       const itemId = this.$route.query.id;
       this.$axios
-        .post(`${this.$store.state.host}/api/content/selected`, {
+        .post(`${this.$store.state.host}/content/selected`, {
           itemId,
           selectedId: selected._id,
         })

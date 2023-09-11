@@ -16,7 +16,7 @@
           <div
             class="background"
             :style="{
-              'background-image': `url(${$store.state.host}/${game.bg})`,
+              'background-image': `url(${$store.state.imgHost}/${game.bg})`,
             }"
           ></div>
           <div class="text-container">

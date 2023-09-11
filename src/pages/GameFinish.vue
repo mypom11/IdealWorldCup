@@ -5,7 +5,7 @@
         <div
           class="img"
           :style="{
-            'background-image': `url(${$store.state.host}/${item.url})`,
+            'background-image': `url(${$store.state.imgHost}/${item.url})`,
           }"
         ></div>
       </div>
@@ -23,7 +23,16 @@
         </div>
         <div class="button-wrap">
           <button @click="$router.push({ name: 'Main' })">메인 페이지</button>
-          <button>랭킹 보기</button>
+          <button
+            @click="
+              $router.push({
+                name: 'GameRanking',
+                query: { id: `${$route.query.id}` },
+              })
+            "
+          >
+            랭킹 보기
+          </button>
         </div>
       </div>
     </article>
@@ -45,7 +54,7 @@ export default {
       } else {
         const id = this.$route.query.id;
         this.$axios
-          .post(`${this.$store.state.host}/api/content/comment`, {
+          .post(`${this.$store.state.host}/content/comment`, {
             id,
             comment: {
               id: "test",

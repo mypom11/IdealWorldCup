@@ -14,7 +14,7 @@
     <ul class="game-list">
       <li v-for="(game, i) in resultList" :key="i">
         <div class="img-wrap">
-          <img :src="`${$store.state.host}/${game.bg}`" alt="" />
+          <img :src="`${$store.state.imgHost}/${game.bg}`" alt="" />
         </div>
         <h4>
           {{ game.title }}
@@ -71,7 +71,7 @@ export default {
       let arr = this.$store.state.contents;
       if (this.tab === 0) {
         arr.sort((a, b) => {
-          return b.popular_count - a.popular_count - b.popular_count;
+          return b.popular_count - a.popular_count;
         });
       } else if (this.tab === 1) {
         arr.sort((a, b) => {
@@ -159,7 +159,7 @@ section {
 .game-list {
   position: relative;
   width: 80%;
-  margin: rem(100) 10%;
+  margin: rem(60) 10%;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;

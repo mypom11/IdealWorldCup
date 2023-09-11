@@ -15,7 +15,7 @@
               <span>총 {{ item.selected }}회 선택</span>
             </h2>
             <div class="img">
-              <img :src="`${$store.state.host}/${item.url}`" alt="" />
+              <img :src="`${$store.state.imgHost}/${item.url}`" alt="" />
             </div>
           </InterctionObserver>
         </ul>
@@ -46,6 +46,7 @@ export default {
       content: [],
       loading: false,
       observer: 0,
+      reverseComment: [],
     };
   },
   mounted() {
@@ -57,15 +58,15 @@ export default {
   methods: {
     getDetail() {
       this.$axios
-        .get(`${this.$store.state.host}/api/content/detail`, {
+        .get(`${this.$store.state.host}/content/detail`, {
           params: {
             id: this.$route.query.id,
           },
         })
         .then((res) => {
-          console.log(res);
           this.content = res.data;
           this.content.items.sort((a, b) => b.selected - a.selected);
+          this.recerseComment = this.content.comment.reverse();
           this.loading = true;
         });
     },
@@ -88,6 +89,10 @@ article {
   height: 100vh;
   overflow-y: scroll;
   justify-content: center;
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
 }
 .coverflow {
   position: relative;
@@ -98,12 +103,11 @@ article {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     padding-top: 50%;
     padding-bottom: 50%;
     > li {
-      width: 70%;
-      height: 50vh;
+      width: 60%;
+      height: 40vh;
       position: relative;
       margin-bottom: 20px;
       opacity: 0.2;
@@ -131,23 +135,23 @@ article {
         top: 100%;
         color: $white;
         opacity: 0;
-        font-size: rem(50);
+        font-size: rem(40);
         transition: 0.5s;
         text-shadow: 3px 3px 6px rgba($color: #000000, $alpha: 1);
         b {
-          font-size: rem(120);
+          font-size: rem(80);
           color: $red;
           margin-left: 10px;
         }
         span {
           display: block;
-          font-size: rem(20);
+          font-size: rem(16);
           color: #ccc;
         }
         p {
           font-family: "comic";
           margin-bottom: 10px;
-          font-size: rem(70);
+          font-size: rem(60);
         }
       }
       .img {
@@ -179,11 +183,16 @@ article {
     width: 50%;
     height: 90%;
     overflow-y: scroll;
-    padding: 50px 0;
+    padding: 20px 0;
+    ::-webkit-scrollbar {
+      width: 0px;
+      height: 0px;
+    }
     h2 {
       position: fixed;
       color: $white;
       opacity: 0.6;
+      font-size: rem(50);
     }
     > ul {
       margin: 120px auto 0;
@@ -193,7 +202,7 @@ article {
         font-family: "comic";
         font-size: rem(26);
         background: $black;
-        padding: 20px;
+        padding: 10px;
         margin-bottom: 40px;
         transform: skewX(20deg);
         border: 5px solid $white;
