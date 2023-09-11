@@ -59,11 +59,9 @@ export default {
       this.section = 2;
       const arr = this.shuffleArray(this.content.items);
       this.selectContent = arr.slice(0, num + 1);
-      console.log(this.selectContent);
     },
 
     getDetail() {
-      console.log(this.$route.query.id);
       this.$axios
         .get(`${this.$store.state.host}/content/detail`, {
           params: {

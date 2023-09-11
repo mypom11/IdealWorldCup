@@ -133,10 +133,10 @@ export default {
       });
 
       //   formdata 확인
-      let entries = formData.entries();
-      for (const pair of entries) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
+      // let entries = formData.entries();
+      // for (const pair of entries) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
 
       this.$axios
         .post(`${this.$store.state.host}/content/upload`, formData)

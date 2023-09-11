@@ -21,7 +21,6 @@ export default {
   methods: {
     getContents() {
       this.$axios.get(`${this.$store.state.host}/content`).then((res) => {
-        console.log(res);
         this.$store.commit("getContents", [...res.data.list]);
         this.loading = true;
       });
