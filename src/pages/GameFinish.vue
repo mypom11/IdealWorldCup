@@ -9,7 +9,6 @@
           }"
         ></div>
       </div>
-      
       <div class="text-wrap">
         <div class="text">
           <div class="label">Rank <span>1</span></div>
